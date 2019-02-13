@@ -8,22 +8,32 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-var rule = require('../../../lib/rules/import-single-quote'),
+const rule = require('../../../lib/rules/import-single-quote'),
   RuleTester = require('eslint').RuleTester
 
-var parserOptions = { ecmaVersion: 6, sourceType: "module" }
-
+const parser = "babel-eslint"
+const parserOptions = { ecmaVersion: 6, sourceType: "module" }
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-var ruleTester = new RuleTester()
-var error = {
+const ruleTester = new RuleTester()
+const errorImport = {
   message: "Do not use double quote for import. Expect to use single quote.",
   type: "ImportDeclaration",
 }
+const errorDynamicImport = {
+  message: "Do not use double quote for dynamic import. Expect to use single quote.",
+  type: "CallExpression",
+}
+const errorRequire = {
+  message: "Do not use double quote for require. Expect to use single quote.",
+  type: "CallExpression",
+}
+
 ruleTester.run("import-single-quote", rule, {
   valid: [
+    // import
     {
       code: `import 'hello-world'`,
       parserOptions,
@@ -44,38 +54,69 @@ ruleTester.run("import-single-quote", rule, {
       code: `import * as myVar from 'hello-world'`,
       parserOptions,
     },
+    
+    // dynamic import
+    {
+      code: `import('hello-world')`,
+      parser,
+      parserOptions,
+    },
+    
+    // require
+    {
+      code: `require('hello-world')`,
+      parserOptions,
+    }
   ],
   
   invalid: [
+    // import
     {
       code: "import \"hello-world\"",
-      errors: [error],
+      errors: [errorImport],
       output: "import 'hello-world'",
       parserOptions,
     },
     {
       code: `import myVar from "hello-world"`,
-      errors: [error],
+      errors: [errorImport],
       output: `import myVar from 'hello-world'`,
       parserOptions,
     },
     {
       code: `import { myVar1, myVar2 } from "hello-world"`,
-      errors: [error],
+      errors: [errorImport],
       output: `import { myVar1, myVar2 } from 'hello-world'`,
       parserOptions,
     },
     {
       code: `import myVar0, { myVar1, myVar2 } from "hello-world"`,
-      errors: [error],
+      errors: [errorImport],
       output: `import myVar0, { myVar1, myVar2 } from 'hello-world'`,
       parserOptions,
     },
     {
       code: `import * as myVar from "hello-world"`,
-      errors: [error],
+      errors: [errorImport],
       output: `import * as myVar from 'hello-world'`,
       parserOptions,
     },
+    
+    // dynamic import
+    {
+      code: `import("hello-world")`,
+      errors: [errorDynamicImport],
+      output: `import('hello-world')`,
+      parser,
+      parserOptions,
+    },
+    
+    // require
+    {
+      code: `require("hello-world")`,
+      errors: [errorRequire],
+      output: `require('hello-world')`,
+      parserOptions,
+    }
   ]
 })

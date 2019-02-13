@@ -13,10 +13,11 @@
     "test": "mocha tests --recursive --watch"
   },
   "dependencies": {
-    "requireindex": "~1.1.0",
-    "eslint": "~3.9.1"
+    "eslint": "git+https://git@github.com/eslint/eslint.git",
+    "requireindex": "~1.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "mocha": "^3.1.2"
   },
   "engines": {
