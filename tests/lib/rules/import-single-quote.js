@@ -1,5 +1,5 @@
 /**
- * @fileoverview Force import use single quote
+ * @fileoverview Force import uses single quote
  * @author Edwin Ting <40881695+edwining01@users.noreply.github.com>
  */
 "use strict"
