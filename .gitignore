@@ -52,3 +52,7 @@ package-lock.json
 ## build folder
 build
 __snapshots__
+
+## editor
+.tags
+.tags_swap
