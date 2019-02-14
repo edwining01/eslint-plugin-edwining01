@@ -83,6 +83,12 @@ ruleTester.run("ternary-spacing", rule, {
       code: "a ? b : c",
       options: [{ questionMark: { before: true, after: true }, colon: { before: true, after: true }}],
     },
+    "a?\n  b: c",
+    "a?\n  b:\n  c",
+    "a? b:\n  c",
+    "a\n? b: c",
+    "a\n? b\n: c",
+    "a? b\n  : c",
   ],
   
   invalid: [
