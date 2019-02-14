@@ -8,8 +8,8 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require('../../../lib/rules/import-single-quote'),
-  RuleTester = require('eslint').RuleTester
+const rule = require('../../../lib/rules/import-single-quote')
+const RuleTester = require('eslint').RuleTester
 
 const parser = "babel-eslint"
 const parserOptions = { ecmaVersion: 6, sourceType: "module" }

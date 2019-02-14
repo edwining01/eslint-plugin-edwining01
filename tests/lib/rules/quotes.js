@@ -9,8 +9,8 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/quotes"),
-    RuleTester = require("eslint/lib/testers/rule-tester")
+const rule = require('../../../lib/rules/quotes')
+const RuleTester = require('eslint/lib/testers/rule-tester')
 
 const ruleTester = new RuleTester()
 
