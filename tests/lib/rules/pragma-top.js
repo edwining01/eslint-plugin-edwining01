@@ -1,5 +1,5 @@
 /**
- * @fileoverview Force import uses single quote
+ * @fileoverview Force pragma comment at the top of file
  * @author Edwin Ting <40881695+edwining01@users.noreply.github.com>
  */
 "use strict"
