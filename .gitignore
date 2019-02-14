@@ -56,3 +56,6 @@ __snapshots__
 ## editor
 .tags
 .tags_swap
+
+## Temporary file
+*.tmp
