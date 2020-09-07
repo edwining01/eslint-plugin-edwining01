@@ -8,7 +8,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 const rule = require('../../../lib/rules/ternary-spacing'),
-  RuleTester = require('eslint').RuleTester
+  RuleTester = require('eslint/lib/rule-tester/rule-tester')
 const type = "ConditionalExpression"
 
 //------------------------------------------------------------------------------

@@ -9,9 +9,9 @@
 //------------------------------------------------------------------------------
 
 const rule = require('../../../lib/rules/import-single-quote')
-const RuleTester = require('eslint').RuleTester
+const RuleTester = require('eslint/lib/rule-tester/rule-tester')
+const parser = require.resolve('babel-eslint')
 
-const parser = "babel-eslint"
 const parserOptions = { ecmaVersion: 6, sourceType: "module" }
 //------------------------------------------------------------------------------
 // Tests
@@ -24,7 +24,7 @@ const errorImport = {
 }
 const errorDynamicImport = {
   message: "Do not use double quote for dynamic import. Expect to use single quote.",
-  type: "CallExpression",
+  type: "ImportExpression",
 }
 const errorRequire = {
   message: "Do not use double quote for require. Expect to use single quote.",
@@ -54,14 +54,14 @@ ruleTester.run("import-single-quote", rule, {
       code: `import * as myVar from 'hello-world'`,
       parserOptions,
     },
-    
+  
     // dynamic import
     {
       code: `import('hello-world')`,
       parser,
       parserOptions,
     },
-    
+  
     // require
     {
       code: `require('hello-world')`,
@@ -111,7 +111,7 @@ ruleTester.run("import-single-quote", rule, {
       parserOptions,
     },
     
-    // require
+    // // require
     {
       code: `require("hello-world")`,
       errors: [errorRequire],

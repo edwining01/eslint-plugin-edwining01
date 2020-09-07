@@ -8,9 +8,8 @@
 // Requirements
 //------------------------------------------------------------------------------
 const rule = require('../../../lib/rules/pragma-top')
-const RuleTester = require('eslint').RuleTester
+const RuleTester = require('eslint/lib/rule-tester/rule-tester')
 const DEFAULT_PRAGMA_COMMENT_STR = "/** @format */\n"
-const loc = 0
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -29,7 +28,7 @@ ruleTester.run("pragma-top", rule, {
       code: "",
       errors: [
         {
-          loc,
+          line: 1,
           message: "Expected pragma comment `/** @format */\n` at the top of file.",
         }
       ],
