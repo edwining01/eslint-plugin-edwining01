@@ -14,10 +14,10 @@
     "test": "mocha tests --recursive"
   },
   "dependencies": {
-    "eslint": "https://github.com/eslint/eslint",
     "requireindex": "~1.2.0"
   },
   "devDependencies": {
+    "eslint": "https://github.com/eslint/eslint",
     "babel-eslint": "^10.1.0",
     "mocha": "^8.1.3"
   },
