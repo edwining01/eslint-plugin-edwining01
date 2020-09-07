@@ -30,6 +30,15 @@ const errorRequire = {
   message: "Do not use double quote for require. Expect to use single quote.",
   type: "CallExpression",
 }
+const errorExportNamed = {
+  message: "Do not use double quote for export. Expect to use single quote.",
+  type: "ExportNamedDeclaration",
+}
+const errorExportAll = {
+  message: "Do not use double quote for export. Expect to use single quote.",
+  type: "ExportAllDeclaration",
+}
+
 
 ruleTester.run("import-single-quote", rule, {
   valid: [
@@ -66,7 +75,21 @@ ruleTester.run("import-single-quote", rule, {
     {
       code: `require('hello-world')`,
       parserOptions,
-    }
+    },
+    
+    // export
+    {
+      code: `export * from 'hello-world'`,
+      parserOptions,
+    },
+    {
+      code: `export { abc } from 'hello-world'`,
+      parserOptions,
+    },
+    {
+      code: `export { abc as defg } from 'hello-world'`,
+      parserOptions,
+    },
   ],
   
   invalid: [
@@ -117,6 +140,26 @@ ruleTester.run("import-single-quote", rule, {
       errors: [errorRequire],
       output: `require('hello-world')`,
       parserOptions,
-    }
+    },
+    
+    // export
+    {
+      code: `export * from "hello-world"`,
+      errors: [errorExportAll],
+      output: `export * from 'hello-world'`,
+      parserOptions,
+    },
+    {
+      code: `export { abc } from "hello-world"`,
+      errors: [errorExportNamed],
+      output: `export { abc } from 'hello-world'`,
+      parserOptions,
+    },
+    {
+      code: `export { abc as defg } from "hello-world"`,
+      errors: [errorExportNamed],
+      output: `export { abc as defg } from 'hello-world'`,
+      parserOptions,
+    },
   ]
 })
