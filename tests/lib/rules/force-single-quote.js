@@ -8,7 +8,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require('../../../lib/rules/import-single-quote')
+const rule = require('../../../lib/rules/force-single-quote')
 const RuleTester = require('eslint/lib/rule-tester/rule-tester')
 const parser = require.resolve('babel-eslint')
 
