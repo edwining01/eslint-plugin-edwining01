@@ -17,8 +17,8 @@
     "requireindex": "~1.2.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.11.5",
     "eslint": "https://github.com/eslint/eslint",
-    "babel-eslint": "^10.1.0",
     "mocha": "^8.1.3"
   },
   "engines": {
