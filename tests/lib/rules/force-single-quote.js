@@ -12,7 +12,12 @@ const rule = require('../../../lib/rules/force-single-quote')
 const RuleTester = require('eslint/lib/rule-tester/rule-tester')
 const parser = require.resolve('@babel/eslint-parser')
 
-const parserOptions = { ecmaVersion: 6, sourceType: "module" }
+const parserOptions = {
+  ecmaVersion: 6,
+  sourceType: "module",
+  requireConfigFile: false,
+}
+
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
