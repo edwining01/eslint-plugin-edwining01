@@ -75,7 +75,14 @@ ruleTester.run("quotes", rule, {
         // `backtick` should not warn property/method names (not computed).
         { code: "var obj = {\"key0\": 0, 'key1': 1};", options: ["backtick"], parserOptions: { ecmaVersion: 6 } },
         { code: "class Foo { 'bar'(){} }", options: ["backtick"], parserOptions: { ecmaVersion: 6 } },
-        { code: "class Foo { static ''(){} }", options: ["backtick"], parserOptions: { ecmaVersion: 6 } }
+        { code: "class Foo { static ''(){} }", options: ["backtick"], parserOptions: { ecmaVersion: 6 } },
+        
+        // `backtick` should not warn dynamic require
+        { code: "require (\"a\"); require ('b');", options: ["backtick"], parserOptions: { ecmaVersion: 6, sourceType: "module" } },
+        
+        // `backtick` should not warn dynamic import
+        { code: "import (\"a\"); import ('b');", options: ["backtick"], parserOptions: { ecmaVersion: 2020, sourceType: "module" } },
+    
     ],
     invalid: [
         {
