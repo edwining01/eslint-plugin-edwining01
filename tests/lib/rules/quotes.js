@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------
 
 const rule = require("../../../lib/rules/quotes"),
-    { RuleTester } = require("../../../lib/rule-tester");
+    { RuleTester } = require("eslint/lib/rule-tester");
 
 const ruleTester = new RuleTester();
 
