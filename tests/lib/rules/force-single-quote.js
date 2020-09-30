@@ -75,10 +75,19 @@ ruleTester.run("import-single-quote", rule, {
       parser,
       parserOptions,
     },
-  
+    {
+      code: `import(\`hello-world\`)`,
+      parser,
+      parserOptions,
+    },
+    
     // require
     {
       code: `require('hello-world')`,
+      parserOptions,
+    },
+    {
+      code: `require(\`hello-world\`)`,
       parserOptions,
     },
     
