@@ -10,7 +10,7 @@
   "author": "Edwin Ting <40881695+edwining01@users.noreply.github.com>",
   "main": "lib/index.js",
   "scripts": {
-    "dev": "mocha tests --recursive --watch",
+    "dev": "mocha tests --recursive --watch --inspect",
     "test": "mocha tests --recursive"
   },
   "dependencies": {
