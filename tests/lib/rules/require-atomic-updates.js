@@ -3,39 +3,38 @@
  * @author Teddy Katz
  * Ref: {@link https://github.com/eslint/eslint/blob/master/tests/lib/rules/require-atomic-updates.js}
  */
-"use strict";
+"use strict"
 
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/require-atomic-updates");
-const { RuleTester } = require("../../../lib/rule-tester");
-
+const rule = require("../../../lib/rules/require-atomic-updates")
+const RuleTester = require('eslint/lib/rule-tester/rule-tester')
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2018 } });
+const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2018 } })
 
 const VARIABLE_ERROR = {
     messageId: "nonAtomicUpdate",
     data: { value: "foo" },
     type: "AssignmentExpression"
-};
+}
 
 const STATIC_PROPERTY_ERROR = {
     messageId: "nonAtomicUpdate",
     data: { value: "foo.bar" },
     type: "AssignmentExpression"
-};
+}
 
 const COMPUTED_PROPERTY_ERROR = {
     messageId: "nonAtomicUpdate",
     data: { value: "foo[bar].baz" },
     type: "AssignmentExpression"
-};
+}
 
 ruleTester.run("require-atomic-updates", rule, {
 
@@ -54,8 +53,8 @@ ruleTester.run("require-atomic-updates", rule, {
         "let foo; async function x() { foo = condition ? foo : await bar; }",
         "async function x() { let foo; bar(() => { let foo; blah(foo); }); foo += await result; }",
         "let foo; async function x() { foo = foo + 1; await bar; }",
-
-
+        
+        
         /*
          * Ensure rule doesn't take exponential time in the number of branches
          * (see https://github.com/eslint/eslint/issues/10893)
@@ -110,7 +109,7 @@ ruleTester.run("require-atomic-updates", rule, {
                 ];
             }
         `,
-
+        
         // https://github.com/eslint/eslint/issues/11194
         `
             async function f() {
@@ -119,7 +118,7 @@ ruleTester.run("require-atomic-updates", rule, {
                 g(() => { records })
             }
         `,
-
+        
         // https://github.com/eslint/eslint/issues/11687
         `
             async function f() {
@@ -131,7 +130,7 @@ ruleTester.run("require-atomic-updates", rule, {
                 }
             }
         `,
-
+        
         // https://github.com/eslint/eslint/issues/11723
         `
             async function f(foo) {
@@ -151,7 +150,17 @@ ruleTester.run("require-atomic-updates", rule, {
                 let bar = await get(foo.id);
                 foo.prop = bar.prop;
             }
-        `
+        `,
+        {
+          code:`
+          async (ctx, next) => {
+              const { ownUserId, } = ctx.state
+              const post = await read(ownUserId)
+              ctx.body = { post, }
+            }
+          `,
+          options: [[`ctx`]],
+        },
     ],
 
     invalid: [
@@ -251,7 +260,7 @@ ruleTester.run("require-atomic-updates", rule, {
             code: "let foo = 0; async function x() { foo = (a ? b ? c ? d ? foo : e : f : g : h) + await bar; if (baz); }",
             errors: [VARIABLE_ERROR]
         },
-
+        
         // https://github.com/eslint/eslint/issues/11723
         {
             code: `
@@ -261,6 +270,21 @@ ruleTester.run("require-atomic-updates", rule, {
                 }
             `,
             errors: [STATIC_PROPERTY_ERROR]
-        }
+        },
+        
+        {
+          code:`
+          async (ctx, next) => {
+              const { ownUserId, } = ctx.state
+              const post = await read(ownUserId)
+              ctx.body = { post, }
+            }
+          `,
+          errors: [{
+              messageId: "nonAtomicUpdate",
+              data: { value: "ctx.body" },
+              type: "AssignmentExpression",
+          }]
+        },
     ]
 });
